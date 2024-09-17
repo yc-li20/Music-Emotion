@@ -259,7 +259,9 @@ href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.cs
        <article>
          <header>
             <font size="+1"><h1 align="center">Rethinking Emotion Bias in Music via Frechet Audio Distance</h1></font>
-            <p style="line-height:100%", align="center"> <b>Authors: </b>Yuanchao Li, Azalea Gui, Dimitra Emmanouilidou, Hannes Gamper</p>
+            <p style="line-height:100%", align="center"> Yuanchao Li, Azalea Gui, Dimitra Emmanouilidou, Hannes Gamper</p>
+            <p style="line-height:100%", align="center"> University of Edinburgh, University of Toronto, Microsoft Research</p>
+
          </header>
       </article>
       </div>
@@ -274,17 +276,17 @@ href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.cs
       <h2>Baseline Models</h2>
       <h3>EmoGen</h3>
         
-        EmoGen uses four pre-extracted embeddings to represent emotions within the four quadrants. It encodes discrete values of these quadrants (e.g., 1 or 2) into embeddings as the emotion input, thus samples within a particular quadrant share the same emotional conditions (i.e., the emotion embeddings for all samples in each quadrant are identical, regardless of their original labels). As a result, while the generated music exhibits precise emotions, we argue that it lacks variation, leading to a situation where all samples with the same emotion tend to sound emotionally similar.
+        EmoGen uses four pre-extracted embeddings to represent emotions within the four quadrants. It encodes discrete values of these quadrants (e.g., 1 or 2) into embeddings as the emotion input, thus samples within a particular quadrant share the same emotional conditions (i.e., the emotion embeddings for all samples in each quadrant are identical, regardless of their original labels). As a result, while the generated music exhibits precise emotions, <b>we argue that it lacks variation, leading to a situation where all samples with the same emotion tend to sound emotionally similar</b>.
 
       <h3>MidiEmo</h3>
         
-        MidiEmo encodes continuous VA labels (e.g., [0.8, 0.8]) as latent embeddings using linear layers, which are then concatenated with music embeddings. We argue that this approach can make music samples with boundary labels more susceptible to subjective bias (as the boundary emotions are usually difficult to distinguish). The challenge of assigning boundary labels with high confidence often leads to ambiguity in the generated emotion. Consequently, while there is considerable variation, ambiguity is prevalent in the generated music, making it difficult to perceive precise emotions.
+        MidiEmo encodes continuous VA labels (e.g., [0.8, 0.8]) as latent embeddings using linear layers, which are then concatenated with music embeddings. <b>We argue that this approach can make music samples with boundary labels more susceptible to subjective bias (as the boundary emotions are usually difficult to distinguish).</b> The challenge of assigning boundary labels with high confidence often leads to ambiguity in the generated emotion. Consequently, while there is considerable variation, ambiguity is prevalent in the generated music, making it difficult to perceive precise emotions.
 
 
       <!-- Method -->
       <h2>Our Proposed Model</h2>
 
-      Our proposed model enhances emotion conditioning by combining the strengths of EmoGen and MIDIEmo, enabling a balance and trade-off between prominence and variation in the generated emotion.
+      Our proposed model enhances emotion conditioning by combining the strengths of EmoGen and MIDIEmo, enabling a balance and trade-off between <b>prominence</b> and <b>variation</b> in the generated emotion.
 
       <figure>
         <p style="text-align:center"><img src="fig/model.png" alt="model" width=600px/></p>
@@ -292,7 +294,7 @@ href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.cs
       </figure>
 
       <figure>
-        <p style="text-align:center"><img src="fig/4Q.png" alt="model" width=400px/></p>
+        <p style="text-align:center"><img src="fig/4Q.png" alt="model" width=500px/></p>
         <figcaption style="text-align:center">Russel's 4Q.</figcaption>
       </figure> 
 
@@ -301,8 +303,8 @@ href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.cs
 
         <h2>Music Samples</h2>
 
-        <h4>The emotion conditions for EmoGen are discrete scores, i.e., [1, 2, 3, 4], denoting Russell's four quadrants. Therefore, VA values do not apply. </h4>
-        <h4>The emotion conditions for MidiEmo and our proposed model are VA scores ranging from -1.0 to 1.0. The low VA denotes both valence and arousal scores assigned from [-0.1, +0.1, -0.2, +0.2, -0.3, +0.3]; mid VA from [-0.4, +0.4, -0.5, +0.5, -0.6, +0.6, -0.7, +0.7]; high VA from [-0.8, +0.8, -0.9, +0.9, -1.0, +1.0]. For example, low VA: [+0.1, +0.2]; mid VA: [+0.4, -0.4]; high VA: [-0.8, +0.9]. </h4>
+        The emotion conditions for <b>EmoGen</b> are discrete scores, i.e., [1, 2, 3, 4], denoting Russell's four quadrants. Therefore, VA values do not apply.
+        The emotion conditions for <b>MidiEmo</b> and <b>our proposed model</b> are VA scores ranging from -1.0 to 1.0. The <b>low VA</b> denotes both valence and arousal scores assigned from [-0.1, +0.1, -0.2, +0.2, -0.3, +0.3]; <b>mid VA</b> from [-0.4, +0.4, -0.5, +0.5, -0.6, +0.6, -0.7, +0.7]; <b>high VA</b> from [-0.8, +0.8, -0.9, +0.9, -1.0, +1.0]. For example, low VA: [+0.1, +0.2]; mid VA: [+0.4, -0.4]; high VA: [-0.8, +0.9]. <b>Boundary labels usually come from low VA and high VA.</b>
 
             <table align="center">
                 <tr>
