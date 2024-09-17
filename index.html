@@ -258,17 +258,17 @@ href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.cs
      <div class="main">
        <article>
          <header>
-            <font size="+1"><h1 align="center">AccentBox: Towards High-Fidelity Zero-Shot Accent Generation</h1></font>
-            <!-- <p style="line-height:100%", align="center"> <b>Authors: </b>Jinzuomu Zhong, Yang Li, Hui Huang, Jie Liu, Zhiba Su, Jing Guo, Benlai Tang, Fengjie Zhu</p> -->
+            <font size="+1"><h1 align="center">Rethinking Emotion Bias in Music via Frechet Audio Distance</h1></font>
+            <!-- <p style="line-height:100%", align="center"> <b>Authors: </b>Yuanchao Li, Azalea Gui, Dimitra Emmanouilidou, Hannes Gamper</p> -->
             
-            <table style="border:1px solidb ack;margin-left:auto;margin-right:auto;border-spacing:20px;">
-              <tr>
-                <td><h4><a href="">Arxiv</a></h4></td>
-                <td><h4><a href="https://jzmzhong.github.io/AccentBox-ICASSP2025">Demo</a></h4></td>
+            <!-- <table style="border:1px solidb ack;margin-left:auto;margin-right:auto;border-spacing:20px;"> -->
+              <!-- <tr> -->
+                <!-- <td><h4><a href="">Arxiv</a></h4></td> -->
+                <!-- <td><h4><a href="https://jzmzhong.github.io/AccentBox-ICASSP2025">Demo</a></h4></td> -->
                 <!-- <td><h4><a href="https://github.com/jzmzhong/Automatic-Prosody-Annotator-with-SSWP-CLAP/">Code</a></h4></td> -->
-              </tr>
-            </table>
-            <h4>All demos on this page are NOT cherry-pickied. We arbitrarily choose the first five stimulus for demonstration.</h4>
+              <!-- </tr> -->
+            <!-- </table> -->
+            <!-- <h4>All demos on this page are NOT cherry-pickied. We arbitrarily choose the first five stimulus for demonstration.</h4> -->
          </header>
       </article>
       </div>
@@ -277,242 +277,40 @@ href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.cs
       
       <!-- Abstract -->
       <h2>Abstract</h2>
-      While recent Zero-Shot Text-to-Speech (ZS-TTS) models have achieved high naturalness and speaker similarity, they fall short in accent fidelity and control. To address this issue, we propose zero-shot accent generation that unifies Foreign Accent Conversion (FAC), accented TTS, and ZS-TTS, with a novel two-stage pipeline. In the first stage, we achieve state-of-the-art (SOTA) on Accent Identification (AID) with 0.56 f1 score on unseen speakers. In the second stage, we condition ZS-TTS system on the pretrained speaker-agnostic accent embeddings extracted by the AID model. The proposed system achieves higher accent fidelity on inherent/cross accent generation, and enables unseen accent generation.    
+      The subjective nature of music emotion introduces inherent bias in both recognition and generation, especially when relying on a single audio encoder, emotion classifier, or evaluation metric. In this work, we conduct a study on Music Emotion Recognition (MER) and Emotional Music Generation (EMG), employing diverse audio encoders alongside the Fréchet Audio Distance (FAD), a reference-free evaluation metric. Our study begins with a benchmark evaluation of MER, highlighting the limitations associated with using a single audio encoder and the disparities observed across different measurements. We then propose assessing MER performance using FAD from multiple encoders to provide a more objective measure of music emotion. Furthermore, we introduce an enhanced EMG approach designed to improve both the variation and prominence of generated music emotion, thus enhancing realism. Additionally, we investigate the realism disparities between the emotions conveyed in real and synthetic music, comparing our EMG model against two baseline models. Experimental results underscore the emotion bias problem in both MER and EMG and demonstrate the potential of using FAD and diverse audio encoders to evaluate music emotion objectively.  
       
-      <!-- Problem -->
-      <h2>I. Problem Identification</h2>
-      <h3>Accent Haullucination/Mismatch in ZS-TTS</h3>
+      <!-- Baselines -->
+      <h2>Baseline Models</h2>
+      <h3>EmoGen</h3>
         
-        In each of the following group, we input a fixed reference text-speech pair to the open-source VALL-E X with different target texts. The reference text-speech pairs are the 24th utterance from different test speakers of different accents in VCTK. The target texts are the first five stimulus in the elicitation passage Comma Gets a Cure. We also provide the accent prediction results by GenAID. Note that GenAID is not trained on any synthesised speech and therefore the results may be inaccurate - but it does demonstrate the inconsistency of accents in the generated speech.
-      
-      <h4>Group I: Prompting VALL-E X with Scottish Speaker (p234 in VCTK)</h4>
-      
-      <table align="center">
-        <tr>
-          <td style="text-align:center">Reference Speech</td>
-          <td style="text-align:center">Reference Text</td>
-        </tr>
-        <tr>
-          <td>
-            <audio controls>
-              <source src="wav/VALLE-X/Scottish_p234/p234_024_prompt.wav">
-            </audio>
-          </td>
-          <td style="text-align:center">
-            This is a very common type of bow, one showing mainly<br>red and yellow, with little or no green or blue.
-          </td>
-        </tr>
-      </table>
-      <br>
-      <br>
-      <table align="center">
-        <tr>
-          <td style="text-align:center">Target Text</td>
-          <td style="text-align:center">VALL-E X Generation</td>
-          <td style="text-align:center">GenAID Prediction</td>
-        </tr>
-        <tr>
-            <td style="text-align:left">
-                1. Well, here's a story for you.
-            </td>
-            <td>
-                <audio controls>
-                <source src="wav/VALLE-X/Scottish_p234/stimuli01.wav">
-                </audio>
-            </td>
-            <td style="text-align:center">
-                Australian
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align:left">
-                2. Sarah Perry was a veterinary nurse who had been working daily<br>at an old zoo in a deserted district of the territory.
-            </td>
-            <td>
-              <audio controls>
-                <source src="wav/VALLE-X/Scottish_p234/stimuli02.wav">
-              </audio>
-            </td>
-            <td style="text-align:center">
-              Australian
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align:left">
-                3. So, she was very happy to start a new job at a superb private<br>practice in North Square near the Duke Street Tower.
-            </td>
-            <td>
-              <audio controls>
-                <source src="wav/VALLE-X/Scottish_p234/stimuli03.wav">
-              </audio>
-            </td>
-            <td style="text-align:center">
-              American
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align:left">
-                4. That area was much nearer for her and more to her liking.
-            </td>
-            <td>
-              <audio controls>
-                <source src="wav/VALLE-X/Scottish_p234/stimuli04.wav">
-              </audio>
-            </td>
-            <td style="text-align:center">
-              English
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align:left">
-                5. Even so, on her first morning, she felt stressed.
-            </td>
-            <td>
-              <audio controls>
-                <source src="wav/VALLE-X/Scottish_p234/stimuli05.wav">
-              </audio>
-            </td>
-            <td style="text-align:center">
-              English
-            </td>
-        </tr>
-      </table>
+        EmoGen uses four pre-extracted embeddings to represent emotions within the four quadrants. It encodes discrete values of these quadrants (e.g., 1 or 2) into embeddings as the emotion input, thus samples within a particular quadrant share the same emotional conditions (i.e., the emotion embeddings for all samples in each quadrant are identical, regardless of their original labels). As a result, while the generated music exhibits precise emotions, we argue that it lacks variation, leading to a situation where all samples with the same emotion tend to sound emotionally similar.
 
-      <h4>Group II: Prompting VALL-E X with Irish Speaker (p245 in VCTK)</h4>
-      
-      <table align="center">
-        <tr>
-          <td style="text-align:center">Reference Speech</td>
-          <td style="text-align:center">Reference Text</td>
-        </tr>
-        <tr>
-          <td>
-            <audio controls>
-              <source src="wav/VALLE-X/Irish_p245/p245_024_prompt.wav">
-            </audio>
-          </td>
-          <td style="text-align:center">
-            This is a very common type of bow, one showing mainly<br>red and yellow, with little or no green or blue.
-          </td>
-        </tr>
-      </table>
-      <br>
-      <br>
-      <table align="center">
-        <tr>
-          <td style="text-align:center">Target Text</td>
-          <td style="text-align:center">VALL-E X Generation</td>
-          <td style="text-align:center">GenAID Prediction</td>
-        </tr>
-        <tr>
-            <td style="text-align:left">
-                1. Well, here's a story for you.
-            </td>
-            <td>
-                <audio controls>
-                <source src="wav/VALLE-X/Irish_p245/stimuli01.wav">
-                </audio>
-            </td>
-            <td style="text-align:center">
-                Australian
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align:left">
-                2. Sarah Perry was a veterinary nurse who had been working daily<br>at an old zoo in a deserted district of the territory.
-            </td>
-            <td>
-              <audio controls>
-                <source src="wav/VALLE-X/Irish_p245/stimuli02.wav">
-              </audio>
-            </td>
-            <td style="text-align:center">
-              Canadian
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align:left">
-                3. So, she was very happy to start a new job at a superb private<br>practice in North Square near the Duke Street Tower.
-            </td>
-            <td>
-              <audio controls>
-                <source src="wav/VALLE-X/Irish_p245/stimuli03.wav">
-              </audio>
-            </td>
-            <td style="text-align:center">
-              American
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align:left">
-                4. That area was much nearer for her and more to her liking.
-            </td>
-            <td>
-              <audio controls>
-                <source src="wav/VALLE-X/Irish_p245/stimuli04.wav">
-              </audio>
-            </td>
-            <td style="text-align:center">
-              American
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align:left">
-                5. Even so, on her first morning, she felt stressed.
-            </td>
-            <td>
-              <audio controls>
-                <source src="wav/VALLE-X/Irish_p245/stimuli05.wav">
-              </audio>
-            </td>
-            <td style="text-align:center">
-              Canadian
-            </td>
-        </tr>
-      </table>
+      <h3>MidiEmo</h3>
+        
+        MidiEmo encodes continuous VA labels (e.g., [0.8, 0.8]) as latent embeddings using linear layers, which are then concatenated with music embeddings. We argue that this approach can make music samples with boundary labels more susceptible to subjective bias (as the boundary emotions are usually difficult to distinguish). The challenge of assigning boundary labels with high confidence often leads to ambiguity in the generated emotion. Consequently, while there is considerable variation, ambiguity is prevalent in the generated music, making it difficult to perceive precise emotions.
+
 
       <!-- Method -->
-      <h2>II. Model Architecture</h2>
-      <h3>Stage I: GenAID - Generalisable Accent Identification across Speakers</h3>
+      <h2>Our Proposed Model</h2>
       <figure>
-        <p style="text-align:center"><img src="./figs/AID_methods.drawio.png" alt="AVSE" width=500px/></p>
-        <!-- <figcaption style="text-align:center">Figure 1: The first stage AID systems (GenAID).</figcaption> -->
+        <p style="text-align:center"><img src="./model.png" alt="model" width=500px/></p>
+        <figcaption style="text-align:center">Our proposed model (above) and its comparison to baseline models in terms of emotion conditioning (below).</figcaption>
+      </figure>
+
+      <figure>
+        <p style="text-align:center"><img src="./4Q.png" alt="model" width=500px/></p>
+        <figcaption style="text-align:center">Russel's 4Q.</figcaption>
       </figure> 
-      <!-- <br>     -->
-      <h3>Stage II: AccentBox - High-Fidelity Zero-Shot Accent Generation</h3>
-      <figure>
-        <p style="text-align:center"><img src="./figs/accented_tts_v3.drawio.png" alt="AVSE" width=600px/></p>
-        <!-- <figcaption style="text-align:center">Figure 2: The second stage ZS-TTS system (AccentBox).</figcaption> -->
-      </figure>
-      
-      <h2>III. Results</h2>
-      <h3>Accent Identification Results</h3>
-      <figure>
-        <p style="text-align:center"><img src="./figs/aid_results.png" alt="AVSE" width=550px/></p>
-        <!-- <figcaption style="text-align:center">Table 1: AID results (#E - ECAPA-TDNN, #X - XLSR, w/ changes are accumulative).</figcaption> -->
-      </figure>
-      <h3>Zero-shot Accent Generation Results</h3>
-      <figure>
-        <p style="text-align:center"><img src="./figs/tts_obj_results.png" alt="AVSE" width=500px/></p>
-        <!-- <figcaption style="text-align:center">Table 2: TTS objective results.<br>Acc COS - Accent Cosine Similarity, Spk COS - Speaker Cosine Similarity.</figcaption> -->
-      </figure>
-      <!-- <br> -->
-      <figure>
-        <p style="text-align:center"><img src="./figs/tts_subj_results_1.png" alt="AVSE" width=500px/></p>
-        <!-- <figcaption style="text-align:center">Table 3: TTS subjective results for inherent accent generation.</figcaption> -->
-      </figure>
-      <!-- <br> -->
-      <figure>
-        <p style="text-align:center"><img src="./figs/tts_subj_results_2.png" alt="AVSE" width=500px/></p>
-        <!-- <figcaption style="text-align:center">Table 4: TTS subjective results for cross accent generation.</figcaption> -->
-      </figure>
 
-      <!-- Here are part of the speech for TTS evaluations test. -->
 
-        <h2>IV. Synthesis Samples</h2>
+      <!-- Music samples -->
 
-        <h3>Inherent Accent Generation</h3>
-            <table align="center">
+        <h2>Music Samples</h2>
+
+        <h3>The emotion conditions for EmoGen are discrete scores, i.e., [1, 2, 3, 4], denoting Russel's four quadrants. Therefore, VA values do no apply.</h3>
+        <h3>The emotion conditions for MidiEMO and our proposed model are VA scores ranging from -1.0 to 1.0. Low VA denotes both valence and arousal scores are assigned from [-0.1, +0.1, -0.2, +0.2, -0.3, +0.3]. Mid VA from [-0.4, +0.4, -0.5, +0.5, -0.6, +0.6, -0.7, +0.7]. High VA from [-0.8, +0.8, -0.9, +0.9, -1.0, +1.0]. A low VA example: [+0.1, +0.2], A mid VA example: [+0.4, -0.4]. A high VA example: [-0.8, +0.9] </h3>
+
+<!--             <table align="center">
                 <tr>
                     <td style="text-align:center">Reference Speech (Speaker & Accent)</td>
                     <td style="text-align:center">Note</td>
@@ -527,805 +325,316 @@ href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.cs
                     speaker: p225<br>accent: English
                     </td>
                 </tr>
-            </table>
+            </table> -->
             <table align="center">
                 <tr>
-                    <td style="text-align:center">Stimuli</td>
-                    <td style="text-align:center">Baseline</td>
-                    <td style="text-align:center">Accent_ID</td>
-                    <td style="text-align:center">Proposed</td>
+                    <td style="text-align:center">Q1</td>
+                    <td style="text-align:center">EmoGen</td>
+                    <td style="text-align:center">Q1</td>
+                    <td style="text-align:center">MidiEmo</td>
+                    <td style="text-align:center">Ours</td>
                 </tr>
                 <tr>
                     <td style="text-align:left">
-                        #1
+                        sample 1
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/Baseline/English_p225/stimuli_01.wav">
+                        <source src="mp3/EmoGen/Q1/1.mp3">
                         </audio>
                     </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Inherent/Accent_ID/English_p225/stimuli_01.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Inherent/X6/English_p225/stimuli_01.wav">
-                        </audio>
-                    </td>
-                </tr>
-                <tr>
                     <td style="text-align:left">
-                        #2
+                        low VA
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/Baseline/English_p225/stimuli_02.wav">
+                        <source src="mp3/MidiEmo/Q1/low.mp3">
                         </audio>
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/Accent_ID/English_p225/stimuli_02.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Inherent/X6/English_p225/stimuli_02.wav">
+                        <source src="mp3/Ours/Q1/low.mp3">
                         </audio>
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align:left">
-                        #3
+                        sample 2
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/Baseline/English_p225/stimuli_03.wav">
+                        <source src="mp3/EmoGen/Q1/2.mp3">
+                        </audio>
+                    </td>
+                    <td style="text-align:left">
+                        mid VA
+                    </td>
+                    <td>
+                        <audio controls>
+                        <source src="mp3/MidiEmo/Q1/mid.mp3">
                         </audio>
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/Accent_ID/English_p225/stimuli_03.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Inherent/X6/English_p225/stimuli_03.wav">
+                        <source src="mp3/Ours/Q1/mid.mp3">
                         </audio>
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align:left">
-                        #4
+                        sample 3
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/Baseline/English_p225/stimuli_04.wav">
+                        <source src="mp3/EmoGen/Q1/3.mp3">
+                        </audio>
+                    </td>
+                    <td style="text-align:left">
+                        high VA
+                    </td>
+                    <td>
+                        <audio controls>
+                        <source src="mp3/MidiEmo/Q1/high.mp3">
                         </audio>
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/Accent_ID/English_p225/stimuli_04.wav">
+                        <source src="mp3/Ours/Q1/high.mp3">
+                        </audio>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:center">Q2</td>
+                    <td style="text-align:center">EmoGen</td>
+                    <td style="text-align:center">Q2</td>
+                    <td style="text-align:center">MidiEmo</td>
+                    <td style="text-align:center">Ours</td>
+                </tr>
+                <tr>
+                    <td style="text-align:left">
+                        sample 1
+                    </td>
+                    <td>
+                        <audio controls>
+                        <source src="mp3/EmoGen/Q2/1.mp3">
+                        </audio>
+                    </td>
+                    <td style="text-align:left">
+                        low VA
+                    </td>
+                    <td>
+                        <audio controls>
+                        <source src="mp3/MidiEmo/Q2/low.mp3">
                         </audio>
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/X6/English_p225/stimuli_04.wav">
+                        <source src="mp3/Ours/Q2/low.mp3">
                         </audio>
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align:left">
-                        #5
+                        sample 2
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/Baseline/English_p225/stimuli_05.wav">
+                        <source src="mp3/EmoGen/Q2/2.mp3">
                         </audio>
                     </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Inherent/Accent_ID/English_p225/stimuli_05.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Inherent/X6/English_p225/stimuli_05.wav">
-                        </audio>
-                    </td>
-                </tr>
-            </table>
-            <br>
-            <table align="center">
-                <tr>
-                    <td style="text-align:center">Reference Speech (Speaker & Accent)</td>
-                    <td style="text-align:center">Note</td>
-                </tr>
-                <tr>
-                    <td>
-                    <audio controls>
-                        <source src="wav/Speech_Prompts/p294_024_mic1.flac">
-                    </audio>
-                    </td>
-                    <td style="text-align:center">
-                    speaker: p294<br>accent: American
-                    </td>
-                </tr>
-            </table>
-            <table align="center">
-                <tr>
-                    <td style="text-align:center">Stimuli</td>
-                    <td style="text-align:center">Baseline</td>
-                    <td style="text-align:center">Accent_ID</td>
-                    <td style="text-align:center">Proposed</td>
-                </tr>
-                <tr>
                     <td style="text-align:left">
-                        #1
+                        mid VA
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/Baseline/American_p294/stimuli_01.wav">
+                        <source src="mp3/MidiEmo/Q2/mid.mp3">
                         </audio>
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/Accent_ID/American_p294/stimuli_01.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Inherent/X6/American_p294/stimuli_01.wav">
+                        <source src="mp3/Ours/Q2/mid.mp3">
                         </audio>
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align:left">
-                        #2
+                        sample 3
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/Baseline/American_p294/stimuli_02.wav">
+                        <source src="mp3/EmoGen/Q2/3.mp3">
+                        </audio>
+                    </td>
+                    <td style="text-align:left">
+                        high VA
+                    </td>
+                    <td>
+                        <audio controls>
+                        <source src="mp3/MidiEmo/Q2/high.mp3">
                         </audio>
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/Accent_ID/American_p294/stimuli_02.wav">
+                        <source src="mp3/Ours/Q2/high.mp3">
+                        </audio>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:center">Q3</td>
+                    <td style="text-align:center">EmoGen</td>
+                    <td style="text-align:center">Q3</td>
+                    <td style="text-align:center">MidiEmo</td>
+                    <td style="text-align:center">Ours</td>
+                </tr>
+                <tr>
+                    <td style="text-align:left">
+                        sample 1
+                    </td>
+                    <td>
+                        <audio controls>
+                        <source src="mp3/EmoGen/Q3/1.mp3">
+                        </audio>
+                    </td>
+                    <td style="text-align:left">
+                        low VA
+                    </td>
+                    <td>
+                        <audio controls>
+                        <source src="mp3/MidiEmo/Q3/low.mp3">
                         </audio>
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/X6/American_p294/stimuli_02.wav">
+                        <source src="mp3/Ours/Q3/low.mp3">
                         </audio>
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align:left">
-                        #3
+                        sample 2
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/Baseline/American_p294/stimuli_03.wav">
+                        <source src="mp3/EmoGen/Q3/2.mp3">
+                        </audio>
+                    </td>
+                    <td style="text-align:left">
+                        mid VA
+                    </td>
+                    <td>
+                        <audio controls>
+                        <source src="mp3/MidiEmo/Q3/mid.mp3">
                         </audio>
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/Accent_ID/American_p294/stimuli_03.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Inherent/X6/American_p294/stimuli_03.wav">
+                        <source src="mp3/Ours/Q3/mid.mp3">
                         </audio>
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align:left">
-                        #4
+                        sample 3
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/Baseline/American_p294/stimuli_04.wav">
+                        <source src="mp3/EmoGen/Q3/3.mp3">
+                        </audio>
+                    </td>
+                    <td style="text-align:left">
+                        high VA
+                    </td>
+                    <td>
+                        <audio controls>
+                        <source src="mp3/MidiEmo/Q3/high.mp3">
                         </audio>
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/Accent_ID/American_p294/stimuli_04.wav">
+                        <source src="mp3/Ours/Q3/high.mp3">
+                        </audio>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:center">Q4</td>
+                    <td style="text-align:center">EmoGen</td>
+                    <td style="text-align:center">Q4</td>
+                    <td style="text-align:center">MidiEmo</td>
+                    <td style="text-align:center">Ours</td>
+                </tr>
+                <tr>
+                    <td style="text-align:left">
+                        sample 1
+                    </td>
+                    <td>
+                        <audio controls>
+                        <source src="mp3/EmoGen/Q4/1.mp3">
+                        </audio>
+                    </td>
+                    <td style="text-align:left">
+                        low VA
+                    </td>
+                    <td>
+                        <audio controls>
+                        <source src="mp3/MidiEmo/Q4/low.mp3">
                         </audio>
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/X6/American_p294/stimuli_04.wav">
+                        <source src="mp3/Ours/Q4/low.mp3">
                         </audio>
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align:left">
-                        #5
+                        sample 2
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/Baseline/American_p294/stimuli_05.wav">
+                        <source src="mp3/EmoGen/Q4/2.mp3">
                         </audio>
                     </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Inherent/Accent_ID/American_p294/stimuli_05.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Inherent/X6/American_p294/stimuli_05.wav">
-                        </audio>
-                    </td>
-                </tr>
-            </table>
-            <br>
-            <table align="center">
-                <tr>
-                    <td style="text-align:center">Reference Speech (Speaker & Accent)</td>
-                    <td style="text-align:center">Note</td>
-                </tr>
-                <tr>
-                    <td>
-                    <audio controls>
-                        <source src="wav/Speech_Prompts/p245_024_mic1.flac">
-                    </audio>
-                    </td>
-                    <td style="text-align:center">
-                    speaker: p245<br>accent: Irish
-                    </td>
-                </tr>
-            </table>
-            <table align="center">
-                <tr>
-                    <td style="text-align:center">Stimuli</td>
-                    <td style="text-align:center">Baseline</td>
-                    <td style="text-align:center">Accent_ID</td>
-                    <td style="text-align:center">Proposed</td>
-                </tr>
-                <tr>
                     <td style="text-align:left">
-                        #1
+                        mid VA
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/Baseline/Irish_p245/stimuli_01.wav">
+                        <source src="mp3/MidiEmo/Q4/mid.mp3">
                         </audio>
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/Accent_ID/Irish_p245/stimuli_01.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Inherent/X6/Irish_p245/stimuli_01.wav">
+                        <source src="mp3/Ours/Q4/mid.mp3">
                         </audio>
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align:left">
-                        #2
+                        sample 3
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/Baseline/Irish_p245/stimuli_02.wav">
+                        <source src="mp3/EmoGen/Q4/3.mp3">
                         </audio>
                     </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Inherent/Accent_ID/Irish_p245/stimuli_02.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Inherent/X6/Irish_p245/stimuli_02.wav">
-                        </audio>
-                    </td>
-                </tr>
-                <tr>
                     <td style="text-align:left">
-                        #3
+                        high VA
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/Baseline/Irish_p245/stimuli_03.wav">
+                        <source src="mp3/MidiEmo/Q4/high.mp3">
                         </audio>
                     </td>
                     <td>
                         <audio controls>
-                        <source src="wav/Inherent/Accent_ID/Irish_p245/stimuli_03.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Inherent/X6/Irish_p245/stimuli_03.wav">
+                        <source src="mp3/Ours/Q4/high.mp3">
                         </audio>
                     </td>
                 </tr>
-                <tr>
-                    <td style="text-align:left">
-                        #4
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Inherent/Baseline/Irish_p245/stimuli_04.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Inherent/Accent_ID/Irish_p245/stimuli_04.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Inherent/X6/Irish_p245/stimuli_04.wav">
-                        </audio>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">
-                        #5
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Inherent/Baseline/Irish_p245/stimuli_05.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Inherent/Accent_ID/Irish_p245/stimuli_05.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Inherent/X6/Irish_p245/stimuli_05.wav">
-                        </audio>
-                    </td>
-                </tr>
-            </table>
-        
-        <h3>Cross Accent Generation</h3>
-            Note that Baseline system cannot perform cross accent generation.
-            <br>
-            <br>
-            All following samples in cross accent generation take this reference speech for speaker information.
-            <table align="center">
-                <tr>
-                    <td style="text-align:center">Reference Speech (Speaker)</td>
-                    <td style="text-align:center">Note</td>
-                </tr>
-                <tr>
-                    <td>
-                    <audio controls>
-                        <source src="wav/Speech_Prompts/p225_024_mic1.flac">
-                    </audio>
-                    </td>
-                    <td style="text-align:center">
-                    <b>speaker: p225</b><br>accent: English
-                    </td>
-                </tr>
-            </table>
-            <br>
-            Conversion to American accent:
-            <table align="center">
-                <tr>
-                  <td style="text-align:center">Reference Speech (Accent)</td>
-                  <td style="text-align:center">Note</td>
-                </tr>
-                <tr>
-                  <td>
-                    <audio controls>
-                      <source src="wav/Speech_Prompts/p294_024_mic1.flac">
-                    </audio>
-                  </td>
-                  <td style="text-align:center">
-                    speaker: p294<br><b>accent: American</b>
-                  </td>
-                </tr>
-            </table>
-            <table align="center">
-                <tr>
-                    <td style="text-align:center">Stimuli</td>
-                    <td style="text-align:center">Accent_ID</td>
-                    <td style="text-align:center">Proposed</td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">
-                        #1
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Cross/Accent_ID/English_p225_to_American/stimuli_01.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Cross/X6/English_p225_to_American/stimuli_01.wav">
-                        </audio>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">
-                        #2
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Cross/Accent_ID/English_p225_to_American/stimuli_02.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Cross/X6/English_p225_to_American/stimuli_02.wav">
-                        </audio>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">
-                        #3
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Cross/Accent_ID/English_p225_to_American/stimuli_03.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Cross/X6/English_p225_to_American/stimuli_03.wav">
-                        </audio>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">
-                        #4
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Cross/Accent_ID/English_p225_to_American/stimuli_04.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Cross/X6/English_p225_to_American/stimuli_04.wav">
-                        </audio>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">
-                        #5
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Cross/Accent_ID/English_p225_to_American/stimuli_05.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Cross/X6/English_p225_to_American/stimuli_05.wav">
-                        </audio>
-                    </td>
-                </tr>
-            </table>
-            <br>
-            Coversion to Irish accent:
-            <table align="center">
-                <tr>
-                  <td style="text-align:center">Reference Speech (Accent)</td>
-                  <td style="text-align:center">Note</td>
-                </tr>
-                <tr>
-                  <td>
-                    <audio controls>
-                      <source src="wav/Speech_Prompts/p245_024_mic1.flac">
-                    </audio>
-                  </td>
-                  <td style="text-align:center">
-                    speaker: p245<br><b>accent: Irish</b>
-                  </td>
-                </tr>
-            </table>
-            <table align="center">
-                <tr>
-                    <td style="text-align:center">Stimuli</td>
-                    <td style="text-align:center">Accent_ID</td>
-                    <td style="text-align:center">Proposed</td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">
-                        #1
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Cross/Accent_ID/English_p225_to_Irish/stimuli_01.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Cross/X6/English_p225_to_Irish/stimuli_01.wav">
-                        </audio>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">
-                        #2
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Cross/Accent_ID/English_p225_to_Irish/stimuli_02.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Cross/X6/English_p225_to_Irish/stimuli_02.wav">
-                        </audio>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">
-                        #3
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Cross/Accent_ID/English_p225_to_Irish/stimuli_03.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Cross/X6/English_p225_to_Irish/stimuli_03.wav">
-                        </audio>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">
-                        #4
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Cross/Accent_ID/English_p225_to_Irish/stimuli_04.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Cross/X6/English_p225_to_Irish/stimuli_04.wav">
-                        </audio>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">
-                        #5
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Cross/Accent_ID/English_p225_to_Irish/stimuli_05.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Cross/X6/English_p225_to_Irish/stimuli_05.wav">
-                        </audio>
-                    </td>
-                </tr>
-            </table>
-            
-        <h3>Unseen Accent Generation</h3>
-            Note that Accent_ID system cannot perform unseen accent generation.
-            <br>
-            <br>
-            Zero-shot New Zealand accent (unseen by AccentBox, seen by GenAID):
-            <table align="center">
-                <tr>
-                    <td style="text-align:center">Reference Speech (Speaker & Accent)</td>
-                    <td style="text-align:center">Note</td>
-                </tr>
-                <tr>
-                    <td>
-                    <audio controls>
-                        <source src="wav/Speech_Prompts/p335_024_mic1.flac">
-                    </audio>
-                    </td>
-                    <td style="text-align:center">
-                    speaker: p335<br>accent: New Zealand
-                    </td>
-                </tr>
-            </table>
-            <table align="center">
-                <tr>
-                    <td style="text-align:center">Stimuli</td>
-                    <td style="text-align:center">Baseline</td>
-                    <td style="text-align:center">Proposed</td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">
-                        #1
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Unseen/Baseline/NewZealand_p335/stimuli_01.wav">
-                        </audio>
-                    </td>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Unseen/X6/NewZealand_p335/stimuli_01.wav">
-                        </audio>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">
-                        #2
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Unseen/Baseline/NewZealand_p335/stimuli_02.wav">
-                        </audio>
-                    </td>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Unseen/X6/NewZealand_p335/stimuli_02.wav">
-                        </audio>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">
-                        #3
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Unseen/Baseline/NewZealand_p335/stimuli_03.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Unseen/X6/NewZealand_p335/stimuli_03.wav">
-                        </audio>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">
-                        #4
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Unseen/Baseline/NewZealand_p335/stimuli_04.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Unseen/X6/NewZealand_p335/stimuli_04.wav">
-                        </audio>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">
-                        #5
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Unseen/Baseline/NewZealand_p335/stimuli_05.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Unseen/X6/NewZealand_p335/stimuli_05.wav">
-                        </audio>
-                    </td>
-                </tr>
-            </table>
-            <br>
-            Zero-shot Welsh accent (unseen by both AccentBox and GenAID):
-            <table align="center">
-                <tr>
-                    <td style="text-align:center">Reference Speech (Speaker & Accent)</td>
-                    <td style="text-align:center">Note</td>
-                </tr>
-                <tr>
-                    <td>
-                    <audio controls>
-                        <source src="wav/Speech_Prompts/p253_024_mic1.flac">
-                    </audio>
-                    </td>
-                    <td style="text-align:center">
-                    speaker: p253<br>accent: Welsh
-                    </td>
-                </tr>
-            </table>
-            <table align="center">
-                <tr>
-                    <td style="text-align:center">Stimuli</td>
-                    <td style="text-align:center">Baseline</td>
-                    <td style="text-align:center">Proposed</td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">
-                        #1
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Unseen/Baseline/Welsh_p253/stimuli_01.wav">
-                        </audio>
-                    </td>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Unseen/X6/Welsh_p253/stimuli_01.wav">
-                        </audio>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">
-                        #2
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Unseen/Baseline/Welsh_p253/stimuli_02.wav">
-                        </audio>
-                    </td>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Unseen/X6/Welsh_p253/stimuli_02.wav">
-                        </audio>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">
-                        #3
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Unseen/Baseline/Welsh_p253/stimuli_03.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Unseen/X6/Welsh_p253/stimuli_03.wav">
-                        </audio>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">
-                        #4
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Unseen/Baseline/Welsh_p253/stimuli_04.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Unseen/X6/Welsh_p253/stimuli_04.wav">
-                        </audio>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">
-                        #5
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Unseen/Baseline/Welsh_p253/stimuli_05.wav">
-                        </audio>
-                    </td>
-                    <td>
-                        <audio controls>
-                        <source src="wav/Unseen/X6/Welsh_p253/stimuli_05.wav">
-                        </audio>
-                    </td>
-                </tr>
-            </table>
-      <!-- <h2>References</h2>
 
-
-
-      </div> -->
-      <h2>Appendix</h2>
-
-      <h3>Appendix I: Data composition of AID data.</h3>
+      <h3>The music generated by EmoGen is piano only. However, this does not have an impact on the FAD score because EMOPIA (real music) is also piano only. </h3>
       <figure>
-        <p style="text-align:center"><img src="./figs/appendix-aid-data.png" alt="AVSE" width=500px/></p>
+        <p style="text-align:center"><img src="./comparison.png" alt="result" width=500px/></p>
       </figure>
 
     </div>
