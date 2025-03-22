@@ -1,5 +1,5 @@
 # music emotion
 
-Music samples for ICASSP 2025 submission
+Music samples for ICME 2025 submission
 
-**Rethinking Emotion Bias in Music via Frechet Audio Distance**
+**Addressing Emotion Bias in Music Emotion Recognition and Generation with Frechet Audio Distance**
